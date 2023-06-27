@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({ sigint: true });
+
 function BasicFizzBuzz() {
     for (let number = 1; number <= 100; number++){
         if ((number % 3 === 0) && (number % 5 === 0)){
@@ -13,8 +15,9 @@ function BasicFizzBuzz() {
     }
 }
 
-function AdvancedFizzBuzz(){
-    for (let number = 1; number <= 500; number++){
+function AdvancedFizzBuzz(maxNumber){
+    console.assert(maxNumber >= 1, "Number provided is not valid.");
+    for (let number = 1; number <= maxNumber; number++){
         console.log(AdvancedRules(number));
     }
 }
@@ -54,4 +57,7 @@ function AdvancedRules(number){
     return outputMessage;
 }
 
-AdvancedFizzBuzz();
+/* Main */
+
+const maxNumber = prompt("Please enter the number you want to count to: ");
+AdvancedFizzBuzz(maxNumber);
