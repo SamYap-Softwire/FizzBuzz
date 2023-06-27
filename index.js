@@ -21,18 +21,64 @@ function AdvancedFizzBuzz(maxNumber){
     * store function returned by enableRules in a variable
     * do a for loop
     * perform the stored function in each iteration*/
+    console.assert(maxNumber >= 1, 'Max number not valid.');
+    const userRules = prompt('Please enter the rules you want, in the form of numbers separated by spaces: ');
+    const applyRules = EnableRules(userRules)
+    for (let number = 1; number <= maxNumber; number++){
+        console.log(applyRules(number));
+    }
 }
 
+function curry(inputFunction){
+    // inputFunction should take two parameters
+    return function(firstParam){
+        return function(secondParam){
+            return inputFunction(firstParam, secondParam);
+        }
+    }
+}
 function EnableRules(userInput){
     /*User input will be taken in as string
     * Need to parse the user input and convert into array
     * Check that array elements are type int
     * Then sort it in ascending order + filter out numbers that are not valid rules
     * Then return a function which applies the correct rules*/
-    const listOfRules = userInput.split(' ');
-    for (const element of userInput) {
-        console.assert(typeof element === 'number');
+    const validRules = Array(3,5,7,11,13,17);
+    let listOfUserRules = userInput.split(' ');
+    listOfUserRules = listOfUserRules.filter(function(value, index, array){
+        return validRules.includes(value);
+    });
+    let applyRules;
+    for (const rule in listOfUserRules){
+        if (rule === 3){
+            // applyRules = RuleFor3(applyRules());
+            applyRules = curry(RuleFor3)('');
+        }
+        if (rule === 5){
+            // applyRules = RuleFor5(applyRules());
+            applyRules = curry(RuleFor5)(applyRules);
+        }
+        if (rule === 7){
+            // applyRules = RuleFor7(applyRules());
+            applyRules = curry(RuleFor7)(applyRules);
+
+        }
+        if (rule === 11){
+            // applyRules = RuleFor11(applyRules());
+            applyRules = curry(RuleFor11)(applyRules);
+
+        }
+        if (rule === 13){
+            // applyRules = RuleFor13(applyRules());
+            applyRules = curry(RuleFor13)(applyRules);
+
+        }
+        if (rule === 17) {
+            // applyRules = RuleFor17(applyRules());
+            applyRules = curry(RuleFor17)(applyRules);
+        }
     }
+    return applyRules;
 }
 
 
@@ -73,6 +119,7 @@ function RuleFor13(currentMessage, number) {
             currentMessage = currentMessage.substring(0, indexOfB) + 'Fezz' + currentMessage.substring(indexOfB);
         }
     }
+    return currentMessage;
 }
 function RuleFor17(currentMessage, number){
     if (number % 17 === 0){
