@@ -57,6 +57,46 @@ function AdvancedRules(number, userRules){
     return outputMessage;
 }
 
+function customFizzBuzz(){
+    do {
+        rule = prompt("Please enter a rule in the following format: [NUMBER] [TEXT] [PRIORITY-optional]").split(' ');
+        if (len(rule) === 2) {
+            GeneralRules.constructor(rule[0], rule[1]);
+        } else if (len(rule) === 3){
+            GeneralRules.constructor(rule[0], rule[1], rule[2]);
+        } else{
+            console.log("Please enter a valid rule: ");
+
+        }
+        console.log("Would you like to enter another rule?");
+        // continue here - console log should be prompt.
+    } while (false){
+    }
+}
+class GeneralRules{
+
+    static rules = [];
+
+    constructor(number, text, priority=Infinity){
+        this.number = number;
+        this.text = text; // this is the user description of the rule; simple: just the text to append in order
+        this.priority = priority;
+        this.addRule();
+    }
+
+    addRule(self, rule){
+        GeneralRules.rules.push(rule);
+        GeneralRules.rules.sort((element) => element.priority);
+    }
+
+    implementRule(self, numberToCheck, outputMessage){
+        if (numberToCheck % self.number === 0){
+            outputMessage += self.text;
+        }
+        return outputMessage;
+    }
+}
+
 /* Main */
 
 const maxNumber = prompt("Please enter the number you want to count to: ");
