@@ -1,20 +1,5 @@
 const prompt = require("prompt-sync")({ sigint: true });
 
-function BasicFizzBuzz() {
-    for (let number = 1; number <= 100; number++){
-        if ((number % 3 === 0) && (number % 5 === 0)){
-            console.log('FizzBuzz');
-        }
-        else if (number % 3 === 0){
-            console.log('Fizz');
-        } else if (number % 5 === 0){
-            console.log('Buzz');
-        } else {
-            console.log(number);
-        }
-    }
-}
-
 function AdvancedFizzBuzz(maxNumber, userRules){
     console.assert(maxNumber >= 1, "Number provided is not valid.");
     for (let number = 1; number <= maxNumber; number++){
