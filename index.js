@@ -43,48 +43,60 @@ function AdvancedRules(number, userRules){
 }
 
 function customFizzBuzz(){
+    let addMoreRules;
     do {
-        rule = prompt("Please enter a rule in the following format: [NUMBER] [TEXT] [PRIORITY-optional]").split(' ');
-        if (len(rule) === 2) {
-            GeneralRules.constructor(rule[0], rule[1]);
-        } else if (len(rule) === 3){
-            GeneralRules.constructor(rule[0], rule[1], rule[2]);
+        const rule = prompt("Please enter a rule in the following format: [NUMBER] [TEXT] [PRIORITY-optional]: ").split(' ');
+        if (rule.length === 2) {
+            new GeneralRules(rule[0], rule[1])
+        } else if (rule.length === 3){
+            new GeneralRules(rule[0], rule[1], rule[2]);
         } else{
-            console.log("Please enter a valid rule: ");
-
+            console.log("Please enter a valid rule.");
         }
-        console.log("Would you like to enter another rule?");
-        // continue here - console log should be prompt.
-    } while (false){
-    }
+        addMoreRules = prompt("Would you like to enter another rule? (Y/N): ");
+    } while (addMoreRules === "Y" || addMoreRules === "y");
+    const maxNumber = prompt("Please enter the number you want to count to: ");
+    GeneralRules.fizzBuzz(maxNumber);
 }
 class GeneralRules{
 
     static rules = [];
 
-    constructor(number, text, priority=Infinity){
-        this.number = number;
+    constructor(number, text, priority){
+        this.number = +number;
         this.text = text; // this is the user description of the rule; simple: just the text to append in order
-        this.priority = priority;
+        this.priority = (priority === undefined)? Infinity: +priority;
         this.addRule();
     }
 
-    addRule(self, rule){
-        GeneralRules.rules.push(rule);
+    addRule(){
+        GeneralRules.rules.push(this);
         GeneralRules.rules.sort((element) => element.priority);
     }
 
-    implementRule(self, numberToCheck, outputMessage){
-        if (numberToCheck % self.number === 0){
-            outputMessage += self.text;
+    static implementRule(numberToCheck, outputMessage){
+        for (const rule of GeneralRules.rules){
+            if (numberToCheck % rule.number === 0){
+                outputMessage += rule.text;
+            }
+        }
+        if (outputMessage === ''){
+            return numberToCheck;
         }
         return outputMessage;
+    }
+
+    static fizzBuzz(maxNumber){
+        for (let number = 1; number <= maxNumber; number++){
+            console.log(this.implementRule(number, ''));
+        }
     }
 }
 
 /* Main */
 
-const maxNumber = prompt("Please enter the number you want to count to: ");
-const userRules = prompt("Please enter the rules you want to include: ").split(' ');
-console.log(userRules);
-AdvancedFizzBuzz(maxNumber, userRules);
+customFizzBuzz();
+// const maxNumber = prompt("Please enter the number you want to count to: ");
+// const userRules = prompt("Please enter the rules you want to include: ").split(' ');
+// console.log(userRules);
+// AdvancedFizzBuzz(maxNumber, userRules);
